@@ -12,11 +12,17 @@ const getRandomColor = () => {
 }
 
 function ColorBox(props) {
-    const [color, setColor] = useState('deeppink');
+    
+    const [color, setColor] = useState(()=>{
+        var initColor = localStorage.getItem('color-box') || 'deeppink';
+        console.log(initColor);
+        return initColor;
+    });
 
     const handleBoxClick = () => {
         var newColor = getRandomColor();
         setColor(newColor);
+        localStorage.setItem("color-box", newColor);
     }
 
     return (
