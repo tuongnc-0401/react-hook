@@ -4,6 +4,9 @@ import ColorBox from './components/ColorBox';
 import TodoList from './components/TodoList';
 import TodoForm from './components/TodoForm';
 import PostList from './components/PostList';
+import Pagination from './components/Pagination';
+
+import queryString from 'query-string'
 
 function App() {
 
@@ -14,6 +17,12 @@ function App() {
     { id: 14, title: 'one4' },
     { id: 15, title: 'one5' }
   ]);
+
+  const [filters, setFilters] = useState({
+    _page: 1,
+    _limit: 10,
+
+  })
 
   function handleTodoList(todo) {
     var index = todoList.findIndex(x => x.id === todo.id);
@@ -43,23 +52,44 @@ function App() {
   useEffect(() => {
 
     async function fetchPostList() {
-      const requestUrl = 'http://js-post-api.herokuapp.com/api/posts?_limit=10&_page=1';
+
+      const paramsString = queryString.stringify(filters);
+      const requestUrl = `http://js-post-api.herokuapp.com/api/posts?${paramsString}`;
       const response = await fetch(requestUrl);
       const responseJSON = await response.json();
 
-      const { data } = responseJSON;
+      const { data, pagination } = responseJSON;
       setPostList(data);
+      SetPagination(pagination);
     }
 
     fetchPostList();
-  }, []);
+  }, [filters]);
+
+
+  const [pagination, SetPagination] = useState({
+    _page: 1,
+    _limit: 10,
+    _totalRows: 21,
+  })
+
+  function handlePagination(newPage) {
+    console.log(newPage);
+    setFilters({
+      ...filters,
+      _page: newPage,
+    })
+  }
 
   return (
     <div className="app">
       <h1>Welcome</h1>
 
       <PostList posts={postList}></PostList>
-
+      <Pagination
+        pagination={pagination}
+        onPageChange={handlePagination}
+      ></Pagination>
 
       {/* <TodoForm onSubmit={handleTodoFormSubmit}></TodoForm>
       <TodoList todos={todoList} onTodoClick={handleTodoList}></TodoList> */}
