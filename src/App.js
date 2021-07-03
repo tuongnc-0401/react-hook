@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.scss';
 import ColorBox from './components/ColorBox';
 import TodoList from './components/TodoList';
 import TodoForm from './components/TodoForm';
 import PostList from './components/PostList';
 import Pagination from './components/Pagination';
+import PostFilterForm from './components/PostFiltersForm';
 
 import queryString from 'query-string'
 
@@ -81,10 +82,22 @@ function App() {
     })
   }
 
+
+
+  function handleFilterChange(newFilters) {
+    console.log(newFilters);
+    setFilters({
+      ...filters,
+      page: 1,
+      title_like: newFilters.searchTerm,
+    });
+  }
+
   return (
     <div className="app">
       <h1>Welcome</h1>
 
+      <PostFilterForm onSubmit={handleFilterChange}></PostFilterForm>
       <PostList posts={postList}></PostList>
       <Pagination
         pagination={pagination}
