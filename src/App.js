@@ -6,6 +6,7 @@ import TodoForm from './components/TodoForm';
 import PostList from './components/PostList';
 import Pagination from './components/Pagination';
 import PostFilterForm from './components/PostFiltersForm';
+import Clock from './components/Clock';
 
 import queryString from 'query-string'
 
@@ -103,6 +104,8 @@ function App() {
         pagination={pagination}
         onPageChange={handlePagination}
       ></Pagination>
+
+      <Clock></Clock>
 
       {/* <TodoForm onSubmit={handleTodoFormSubmit}></TodoForm>
       <TodoList todos={todoList} onTodoClick={handleTodoList}></TodoList> */}
