@@ -7,6 +7,8 @@ import PostList from './components/PostList';
 import Pagination from './components/Pagination';
 import PostFilterForm from './components/PostFiltersForm';
 import Clock from './components/Clock';
+import MagicBox from './components/MagicBox';
+
 
 import queryString from 'query-string'
 
@@ -97,7 +99,7 @@ function App() {
   return (
     <div className="app">
       <h1>Welcome</h1>
-
+      <MagicBox></MagicBox>
       <PostFilterForm onSubmit={handleFilterChange}></PostFilterForm>
       <PostList posts={postList}></PostList>
       <Pagination
